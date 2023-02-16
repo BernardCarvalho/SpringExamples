@@ -2,6 +2,7 @@ package com.example.security.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.authentication.ProviderManager;
 import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -29,6 +30,7 @@ public class SecurityConfig {
         .authorizeHttpRequests(
             (authorize) -> authorize.anyRequest().authenticated())
         .httpBasic(Customizer.withDefaults())
+        .logout().permitAll()        
         ;
 
         
@@ -53,6 +55,8 @@ public class SecurityConfig {
             .password(passwordEncoder().encode("admin"))
             .roles("ADMIN")
         .build();
+        
+        
         
         InMemoryUserDetailsManager uds = new InMemoryUserDetailsManager(ramesh, admin);
         
